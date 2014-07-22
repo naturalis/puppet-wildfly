@@ -8,7 +8,7 @@ class wildfly::params {
   $user = "wildfly"
   $shell = "/bin/bash"
   $install_dir = "/opt"
-  $version = "8.0.0.Final"
+  $version = "8.1.0.Final"
   $mode = "standalone"
   $profile = "standalone.xml"
   $wait_time = "60"
