@@ -14,6 +14,8 @@ class wildfly::params {
   $wait_time = "60"
   $console_log = "/var/log/wildfly/console.log"
   $pid_file = "/var/run/wildfly/wildfly.pid"
+  $use_web_download = true
+  $download_server = 'http://download.jboss.org'
 
   case $::osfamily {
     'RedHat': {

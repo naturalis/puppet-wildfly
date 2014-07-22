@@ -4,13 +4,22 @@ class wildfly::install {
 
   Exec { path => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin', '/usr/local/bin', '/usr/local/sbin' ], }
 
-  file { "/usr/src/wildfly-${wildfly::version}.tar.gz":
-    source => [ "puppet:///modules/wildfly/wildfly-${wildfly::version}.tar.gz" ]
+  #http://download.jboss.org/wildfly/8.1.0.Final/wildfly-8.1.0.Final.tar.gz
+  if ($wildfly::use_web_download) {
+    exec { 'download-wildfly':
+      command => "/usr/bin/wget http://download.jboss.org/wildfly/${wildfly::version}/wildfly-${wildfly::version}.tar.gz",
+      cwd     => "/usr/src",
+      creates => "/usr/src/wildfly-${wildfly::version}.tar.gz",
+    }
+  }else{
+    file { "/usr/src/wildfly-${wildfly::version}.tar.gz":
+      source => [ "puppet:///modules/wildfly/wildfly-${wildfly::version}.tar.gz" ]
+    }
   }
 
-  exec { untar-wildfly:
+  exec { 'untar-wildfly':
     command     => "tar xzf /usr/src/wildfly-${wildfly::version}.tar.gz",
-    cwd         => "${wildfly::install_dir}", 
+    cwd         => "${wildfly::install_dir}",
     creates     => "${wildfly::install_dir}/wildfly-${wildfly::version}",
     subscribe   => File["/usr/src/wildfly-${wildfly::version}.tar.gz"],
     refreshonly => true
