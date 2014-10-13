@@ -12,7 +12,7 @@ class wildfly::deploy  (
     } ~>
 
     exec { "deploy ${filename}":
-      command     => "/bin/sh  /opt/wildfly/bin/jboss-cli.sh --connect --command='deploy /tmp/${filename} --force'",
+      command     => "/bin/sh  /opt/wildfly/bin/jboss-cli.sh --connect --command='deploy /tmp/${filename}'",
       refreshonly => true,
     }
   }
