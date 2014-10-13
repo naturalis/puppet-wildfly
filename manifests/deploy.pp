@@ -12,8 +12,13 @@ class wildfly::deploy  (
     } ~>
 
     exec { "deploy ${filename}":
-      command     => "/bin/sh  /opt/wildfly/bin/jboss-cli.sh --connect --command='deploy /tmp/${filename}'",
+      command     => "/bin/sh  /opt/wildfly/bin/jboss-cli.sh --connect --command='deploy /tmp/${filename} --force'",
       refreshonly => true,
+    }
+
+    exec { "doublecheck deployment of ${filename}":
+      command     => "/bin/sh  /opt/wildfly/bin/jboss-cli.sh --connect --command='deploy /tmp/${filename} --force'",
+      unless      => "/bin/sh /opt/wildfly/bin/jboss-cli.sh --connect --command='deployment-info' | /bin/grep ${filename} | /bin/grep true | /bin/grep OK"
     }
   }
 
