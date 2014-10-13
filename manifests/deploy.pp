@@ -2,12 +2,13 @@
 #
 class wildfly::deploy  (
   $filename,
-  $deploy_type = 'package',
+  $filelocation = 'puppet:///modules/wildfly',
+  $deploy_type  = 'package',
 )
 {
   if ($deploy_type == 'package') {
     file { "/tmp/${filename}":
-      source => [ "puppet:///modules/wildfly/${filename}" ]
+      source => [ "${filelocation}/${filename}" ]
     } ~>
 
     exec { "deploy ${filename}":
