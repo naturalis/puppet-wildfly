@@ -8,7 +8,8 @@ class wildfly::config {
     owner   => "${wildfly::user}",
     group   => "${wildfly::user}",
     mode    => 0644,
-    source  => [ "puppet:///modules/wildfly/${wildfly::profile}" ]
+    source  => [ "puppet:///modules/wildfly/${wildfly::profile}" ],
+    replace => false,
   }
 
   file { "${wildfly::default_conf}":
