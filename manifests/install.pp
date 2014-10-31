@@ -10,6 +10,7 @@ class wildfly::install {
       command => "/usr/bin/wget http://download.jboss.org/wildfly/${wildfly::version}/wildfly-${wildfly::version}.tar.gz",
       cwd     => '/usr/src',
       creates => "/usr/src/wildfly-${wildfly::version}.tar.gz",
+      require => Package['wget']
     }
     exec { 'untar-wildfly':
       command     => "tar xzf /usr/src/wildfly-${wildfly::version}.tar.gz",
