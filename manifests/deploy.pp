@@ -18,7 +18,8 @@ class wildfly::deploy  (
 
     exec { "doublecheck deployment of ${filename}":
       command     => "/bin/sh  /opt/wildfly/bin/jboss-cli.sh --connect --command='deploy /tmp/${filename} --force'",
-      unless      => "/bin/sh /opt/wildfly/bin/jboss-cli.sh --connect --command='deployment-info' | /bin/grep ${filename} | /bin/grep true | /bin/grep OK"
+      unless      => "/bin/sh /opt/wildfly/bin/jboss-cli.sh --connect --command='deployment-info' | /bin/grep ${filename} | /bin/grep true | /bin/grep OK",
+      require     => File["/tmp/${filename}"],
     }
   }
 
